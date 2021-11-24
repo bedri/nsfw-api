@@ -1,0 +1,26 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "dev": "DEV=1 node server.js",
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "express": "^4.17.1",
+    "morgan": "~1.9.1",
+    "nsfwjs": "~2.4.1",
+    "jpeg-js": "~0.4.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12",
+    "@tensorflow/tfjs-node": "3.11.0"
+  }
+}
