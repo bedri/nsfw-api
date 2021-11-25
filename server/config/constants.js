@@ -14,7 +14,7 @@ const ERROR_CODE = {
     UNEXPECTED: 'error.unexpected',
     INVALID_REQUEST_PARAMETERS: 'error.invalid.request.parameters',
     ITEM_NOT_FOUND: 'error.item.not.found',
-    CANNOT_READ_IMAGE_DATA: 'error.cannot.image.data',
+    CANNOT_READ_IMAGE_DATA: 'error.cannot.read.image.data',
     UNEXPECTED_IMAGE_DATA: 'error.unexpected.image.data',
 }
 
