@@ -2,7 +2,7 @@
 const { logger } = require("./util/logger.util")
 const nsfw = require("nsfwjs")
 const jpeg = require('jpeg-js')
-const tf = require('@tensorflow/tfjs-node')
+const tf = require('@tensorflow/tfjs')
 
 const nsfwWrapper = {
   async loadModel() {
