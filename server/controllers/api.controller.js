@@ -2,6 +2,7 @@ const { ERROR_CODE } = require("../config/constants")
 const { logger } = require("../util/logger.util")
 const { download } = require("../util/http.util")
 const { nsfwWrapper } = require("../nsfw")
+const { profiles } = require("../nsfw-profiles")
 
 /**
  * Check image file for NSFW
@@ -26,18 +27,19 @@ const check = async (request, response) => {
   if (imageData) {
     await nsfwWrapper
       .predict(imageData)
-      .then((prediction) => {
-        if (prediction) {
+      .then((predictions) => {
+        if (predictions) {
           if (request.body.verbose) {
-            responseData.prediction = prediction
+            responseData.prediction = predictions
+            responseData.domonance = predictions.reduce((one, another) => {
+                return one.probability > another.probability ? one : another
+              })
           }
 
-          responseData.decision =
-            prediction.reduce((one, another) => {
-              return one.probability > another.probability ? one : another
-            }).className === "Porn"
-              ? "not.safe"
-              : "safe"
+          responseData.decision = profiles.default(predictions) 
+            ? "not.safe"
+            : "safe"
+
         } 
         else {
           responseData.error = ERROR_CODE.UNEXPECTED
