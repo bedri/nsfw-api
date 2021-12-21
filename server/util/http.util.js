@@ -1,8 +1,10 @@
 const https = require('https')
+const http = require('http')
 const { logger } = require('./logger.util')
 const download = (url) => {
 	return new Promise((resolve, reject) => {
-	https.get(url, (res) => {
+		
+		(url.startsWith('https') ? https : http).get(url, (res) => {
 		const data = []
 		res.on('data', (chunk) => {
 		  data.push(chunk)
@@ -11,6 +13,7 @@ const download = (url) => {
 		  resolve(buffer)
 		})
 	  }).on('error', (error) => {
+		logger.info(`Failed to download ${url}`)
 		logger.error(error)
 	  })
 	})

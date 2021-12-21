@@ -31,11 +31,11 @@ const check = async (request, response) => {
         if (predictions) {
           if (request.body.verbose) {
             responseData.prediction = predictions
-            responseData.domonance = predictions.reduce((one, another) => {
+            responseData.dominance = predictions.reduce((one, another) => {
                 return one.probability > another.probability ? one : another
               })
           }
-
+          
           responseData.decision = profiles.default(predictions) 
             ? "not.safe"
             : "safe"
