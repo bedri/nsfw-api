@@ -7,7 +7,10 @@ const tf = require('@tensorflow/tfjs')
 const nsfwWrapper = {
   async loadModel() {
     logger.basic("Loading", "NSFW model")
-    this.model = await nsfw.load()
+    //this.model = await nsfw.load('http://cpctn.club:7070/nsfw-api/model/web_model_quantized-graph-4mb/', {type: 'graph'})
+    this.model = await nsfw.load('http://cpctn.club:7070/nsfw-api/model/web_model-graph-17mb/', {type: 'graph'})
+    //this.model = await nsfw.load('http://cpctn.club:7070/nsfw-api/model/inception-299x-90mb/', {size: 299})
+    
     logger.basic("Loaded", "NSFW model")
   },
 
