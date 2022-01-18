@@ -1,8 +1,8 @@
-const { ERROR_CODE } = require("../config/constants")
-const { logger } = require("../util/logger.util")
-const { download } = require("../util/http.util")
-const { nsfwWrapper } = require("../nsfw")
-const { PredictionProfiler } = require("../prediction-profiler")
+const { ERROR_CODE } = require('../config/constants')
+const { logger } = require('../util/logger.util')
+const { download } = require('../util/http.util')
+const { nsfwWrapper } = require('../nsfw')
+const { PredictionProfiler } = require('../prediction-profiler')
 
 /**
  * Check image file for NSFW
@@ -18,10 +18,10 @@ const check = async (request, response) => {
     } 
     else if (request.body.source) {
       let source = request.body.source
-      if (source.startsWith("data:image")) {
-        source = source.split(",")[1]
+      if (source.startsWith('data:image')) {
+        source = source.split(',')[1]
       }
-      imageData = Buffer.from(source, "base64")
+      imageData = Buffer.from(source, 'base64')
     } 
     else {
       responseData.error = ERROR_CODE.INVALID_REQUEST_PARAMETERS
@@ -41,8 +41,8 @@ const check = async (request, response) => {
             
             responseData.profile = profiler.profileName
             responseData.decision = profiler.apply(predictions)
-              ? "not.safe"
-              : "safe"
+              ? 'not.safe'
+              : 'safe'
 
           } 
           else {
@@ -52,10 +52,10 @@ const check = async (request, response) => {
         })
         .catch((error) => {
           logger.error(error)
-          if (error && error === "model.loading.in.progress") {
-            responseData.error = "Application warming up, please try again later."
+          if (error && error === 'model.loading.in.progress') {
+            responseData.error = 'Application warming up, please try again later.'
             responseStatusCode = 503
-            response.set("retry-after", 5)
+            response.set('retry-after', 5)
           } else {
             responseData.error = error
             responseStatusCode = 400
@@ -70,7 +70,7 @@ const check = async (request, response) => {
     response.status(responseStatusCode).json(responseData)
   } catch (err) {
     logger.error(err)
-    response.status(500).json({error: "internal.error"})
+    response.status(500).json({error: 'internal.error'})
   }
 }
 

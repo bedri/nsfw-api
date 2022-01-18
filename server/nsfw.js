@@ -1,6 +1,6 @@
 
-const { logger } = require("./util/logger.util")
-const nsfw = require("nsfwjs")
+const { logger } = require('./util/logger.util')
+const nsfw = require('nsfwjs')
 const jpeg = require('jpeg-js')
 const tf = require('@tensorflow/tfjs')
 
@@ -11,34 +11,33 @@ const nsfwWrapper = {
   async loadModel() {
     return new Promise(async (resolve, reject) => {
       if (!!this.model) {
-        logger.basic("Already armed", "NSFW model")
+        logger.basic('Already armed', 'NSFW model')
         resolve(this.model)
       } 
       else if (this.loadingInProgress) {
-        logger.basic("Still loading...", "NSFW model")
-        reject("Still loading...")
+        logger.basic('Still loading...', 'NSFW model')
+        reject('Still loading...')
       }
       else {
         this.loadingInProgress = true
         this.loadStartedAt = + new Date()
   
-        logger.basic("Loading", "NSFW model")
+        logger.basic('Loading', 'NSFW model')
         //this.model = await nsfw.load('http://cpctn.club:7070/nsfw-api/model/web_model_quantized-graph-4mb/', {type: 'graph'})
         this.model = await nsfw.load('http://cpctn.club:7070/nsfw-api/model/web_model-graph-17mb/', {type: 'graph'})
         //this.model = await nsfw.load('http://localhost:8082/model/web_model-graph-17mb/', {type: 'graph'})
         
-        logger.basic("Loaded", `NSFW model (took ${((new Date() - this.loadStartedAt) / 1000 / 60).toFixed(2)} sec.)`)
+        logger.basic('Loaded', `NSFW model (took ${((new Date() - this.loadStartedAt) / 1000 / 60).toFixed(2)} sec.)`)
         this.loadingInProgress = false
         resolve(this.model)
       }
-    });
+    })
     
-
   },
 
   async getModel() {
     if (!this.model && this.loadingInProgress) {
-      return Promise.reject("model.loading.in.progress")
+      return Promise.reject('model.loading.in.progress')
     }
     return this.model
   },
@@ -63,7 +62,7 @@ const nsfwWrapper = {
     const tensor3d = tf.tensor3d(
       values,
       [image.height, image.width, numberOfChannels],
-      "int32"
+      'int32'
     )
     return new Promise(async (resolve, reject) => {
       await this.getModel().then(async (model) => {
